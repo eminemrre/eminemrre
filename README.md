@@ -82,17 +82,7 @@ Self-hosted Telegram bot for AI content workflows.
 ## Live Engineering Metrics
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=eminemrre&theme=github_dark" alt="profile details" />
-</div>
-
-<div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=eminemrre&theme=github_dark" alt="stats card" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=eminemrre&theme=github_dark&utcOffset=3" alt="productive time card" />
-</div>
-
-<div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=eminemrre&theme=github_dark" alt="repos per language" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=eminemrre&theme=github_dark" alt="most commit language" />
+  <img src="https://raw.githubusercontent.com/eminemrre/eminemrre/main/github-metrics.svg" alt="github metrics dashboard" />
 </div>
 
 <div align="center">
@@ -101,10 +91,6 @@ Self-hosted Telegram bot for AI content workflows.
 
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminemrre&bg_color=0d1117&color=d1d5db&line=8A949E&point=C0C6CF&area=true&hide_border=true" alt="activity graph" />
-</div>
-
-<div align="center">
-  <img src="https://ghchart.rshah.org/8A949E/eminemrre" alt="contribution heatmap" />
 </div>
 
 ## Contribution Snake
