@@ -1,7 +1,7 @@
 <h1 align="left">Hi there, I'm Emin 👋</h1>
 
 <p align="left">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=24&duration=2800&pause=700&color=58A6FF&vCenter=true&width=840&lines=Terminal-first+hacker+builder;I+ship+AI+products+end-to-end;React+Native+%2B+Node.js+%2B+PostgreSQL;Build+fast%2C+measure%2C+iterate" alt="typing intro" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=24&duration=2800&pause=700&color=58A6FF&vCenter=true&width=840&lines=Terminal-first+product+builder;Hacker-style+workflows%2C+clean+execution;React+Native+%2B+Node.js+%2B+PostgreSQL;Build+fast%2C+measure%2C+iterate" alt="typing intro" />
 </p>
 
 <p align="left">
