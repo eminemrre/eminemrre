@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:00C9FF,40:4F46E5,100:F59E0B&text=Emin%20Emre&fontSize=52&fontAlignY=36&fontColor=ffffff&desc=AI%20Product%20Engineer%20%7C%20Full-Stack%20Builder&descAlignY=58&descSize=18&animation=fadeIn" alt="header" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0B0B0B,55:2B0000,100:B3001B&text=Emin%20Emre&fontSize=52&fontAlignY=36&fontColor=ffffff&desc=AI%20Product%20Engineer%20%7C%20Full-Stack%20Builder&descAlignY=58&descSize=18&animation=fadeIn" alt="header" />
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=23&duration=2600&pause=700&color=58A6FF&center=true&vCenter=true&width=960&lines=I+ship+AI-native+products+from+idea+to+production;Hacker-style+workflows+with+professional+execution;React+Native+%2B+Node.js+%2B+PostgreSQL+%2B+Realtime+systems;Build+fast%2C+measure+impact%2C+iterate" alt="typing intro" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=23&duration=2600&pause=700&color=FF4D6D&center=true&vCenter=true&width=960&lines=I+ship+AI-native+products+from+idea+to+production;Hacker-style+workflows+with+professional+execution;React+Native+%2B+Node.js+%2B+PostgreSQL+%2B+Realtime+systems;Build+fast%2C+measure+impact%2C+iterate" alt="typing intro" />
 
 <br/>
 
@@ -82,20 +82,29 @@ Self-hosted Telegram bot for AI content workflows.
 ## Live Engineering Metrics
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=eminemrre&theme=tokyonight" alt="profile details" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=eminemrre&theme=github_dark" alt="profile details" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=eminemrre&theme=tokyonight" alt="repos per language" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=eminemrre&theme=tokyonight" alt="most commit language" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=eminemrre&theme=github_dark" alt="stats card" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=eminemrre&theme=github_dark&utcOffset=3" alt="productive time card" />
 </div>
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com?user=eminemrre&theme=tokyonight&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="streak" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=eminemrre&theme=github_dark" alt="repos per language" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=eminemrre&theme=github_dark" alt="most commit language" />
 </div>
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminemrre&bg_color=1a1b27&color=70a5fd&line=38bdae&point=bf91f3&area=true&hide_border=true" alt="activity graph" />
+  <img src="https://streak-stats.demolab.com?user=eminemrre&background=0D1117&border=30363D&stroke=EF4444&ring=DC2626&fire=F43F5E&currStreakNum=F8FAFC&sideNums=F8FAFC&currStreakLabel=F43F5E&sideLabels=E5E7EB&dates=9CA3AF" alt="streak" />
+</div>
+
+<div align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminemrre&bg_color=0d1117&color=fca5a5&line=ef4444&point=fb7185&area=true&hide_border=true" alt="activity graph" />
+</div>
+
+<div align="center">
+  <img src="https://ghchart.rshah.org/dc2626/eminemrre" alt="contribution heatmap" />
 </div>
 
 ## Contribution Snake
