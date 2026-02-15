@@ -1,6 +1,10 @@
 <h1 align="left">Hi there, I'm Emin 👋</h1>
 
 <p align="left">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=24&duration=2800&pause=700&color=58A6FF&vCenter=true&width=840&lines=Terminal-first+hacker+builder;I+ship+AI+products+end-to-end;React+Native+%2B+Node.js+%2B+PostgreSQL;Build+fast%2C+measure%2C+iterate" alt="typing intro" />
+</p>
+
+<p align="left">
   Terminal-first builder shipping AI products from idea to production.<br/>
   I build fast, automate the repetitive parts, and open-source what works.
 </p>
@@ -9,6 +13,7 @@
   <a href="https://github.com/eminemrre?tab=followers"><img src="https://img.shields.io/github/followers/eminemrre?style=for-the-badge&logo=github" alt="followers" /></a>
   <a href="https://github.com/eminemrre"><img src="https://img.shields.io/github/stars/eminemrre?affiliations=OWNER%2CCOLLABORATOR&style=for-the-badge&logo=github" alt="stars" /></a>
   <a href="https://cafeduotr.com"><img src="https://img.shields.io/badge/Website-cafeduotr.com-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white" alt="website" /></a>
+  <img src="https://komarev.com/ghpvc/?username=eminemrre&style=for-the-badge&color=0e75b6" alt="profile views" />
 </p>
 
 ## Building Now
@@ -48,6 +53,14 @@ Self-hosted Telegram AI bot for niche content generation and optional X publishi
 <p align="left">
   <img src="https://streak-stats.demolab.com?user=eminemrre&theme=transparent&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="streak" />
 </p>
+
+## Contribution Snake
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/eminemrre/eminemrre/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/eminemrre/eminemrre/output/github-contribution-grid-snake.svg" />
+  <img alt="github contribution snake animation" src="https://raw.githubusercontent.com/eminemrre/eminemrre/output/github-contribution-grid-snake.svg" />
+</picture>
 
 ## What I Optimize For
 
