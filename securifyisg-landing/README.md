@@ -2,13 +2,23 @@
 
 [securifyisg.com](https://securifyisg.com) için ürün tanıtım (landing) sayfası. Panelin kendi marka kimliğiyle birebir uyumlu: koyu tema (`#08090c`), zümrüt aksan (`#18e29b`), Space Grotesk / Inter / JetBrains Mono.
 
-Tek dosyalık statik bir sayfadır; framework, build adımı ve JavaScript gerektirmez.
+Statik bir sayfadır; framework ve build adımı gerektirmez. Tüm bağımlılıklar (fontlar dahil) yereldir — dış CDN'e tek istek atılmaz.
+
+## Teknoloji
+
+- **GSAP 3.13** + **ScrollTrigger** + **SplitText** — hero zaman çizelgesi (satır satır başlık reveal'ı, KPI sayaçları, sparkline çizimi), kaydırma reveal'ları, aktif bölüm vurgusu. GSAP artık tüm eklentileriyle ücretsiz.
+- **Lenis 1.3** — pürüzsüz kaydırma, ScrollTrigger ile senkron.
+- **Vanilla canvas** — hero'da partikül + tarama çizgisi efekti (DPR duyarlı, görünüm dışında duraklar).
+- Maket eğimi (pointer tilt), kartlarda imleç spot ışığı, modül marquee'si, maket içi canlı bildirim döngüsü.
+
+**Erişilebilirlik / dayanıklılık:** `prefers-reduced-motion` ve JS'siz tarayıcılarda sayfa animasyonsuz ama eksiksiz görünür (progressive enhancement); kütüphaneler yüklenemezse içerik otomatik görünür kalır. `?static=1` parametresi animasyonları tamamen kapatır (ekran görüntüsü/test için).
 
 ## İçerik
 
 | Dosya | Açıklama |
 |---|---|
-| `index.html` | Sayfanın tamamı (HTML + CSS, JS yok) |
+| `index.html` | Sayfanın tamamı (HTML + CSS + animasyon kodu) |
+| `vendor/` | GSAP, ScrollTrigger, SplitText, Lenis (self-hosted) |
 | `fonts/` | Panelin kendi woff2 subset'leri (self-hosted — Google Fonts'a istek atılmaz, KVKK dostu) |
 | `favicon.ico` | Panel ile aynı favicon |
 | `og.png` | Sosyal medya paylaşım görseli (1200×630) |

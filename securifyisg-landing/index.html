@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SecurifyISG — İSG Operasyon Paneli</title>
-<meta name="description" content="Risk değerlendirmeden DÖF takibine, eğitimlerden KKD zimmetine: tüm iş sağlığı ve güvenliği operasyonunuz çok tesisli tek panelde. Canlı KPI'lar, resmî çıktılar, rol bazlı erişim.">
+<meta name="description" content="Risk değerlendirmeden DÖF takibine, eğitimlerden ekipman kontrollerine: tüm iş sağlığı ve güvenliği operasyonunuz çok tesisli tek panelde. Canlı KPI'lar, resmî çıktılar, rol bazlı erişim.">
 <link rel="canonical" href="https://securifyisg.com/">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32" type="image/x-icon">
 <meta name="theme-color" content="#08090c">
@@ -32,6 +32,10 @@
   "description": "İş sağlığı ve güvenliği operasyon yönetim paneli: risk değerlendirme, DÖF, kaza / ramak kala, denetim, eğitim ve daha fazlası tek panelde."
 }
 </script>
+
+<!-- Animasyonlar yalnızca JS varken ve kullanıcı hareket azaltmayı istememişken devreye girer.
+     ?static=1 parametresi tüm animasyonları kapatır (ekran görüntüsü / og görseli için). -->
+<script>(function(){try{var q=new URLSearchParams(location.search);var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(!q.has('static')&&!r)document.documentElement.classList.add('js')}catch(e){}})()</script>
 
 <style>
 /* ── SecurifyISG marka fontları (panelin kendi subset'leri, self-hosted) ── */
@@ -72,6 +76,7 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html.js{scroll-behavior:auto} /* kaydırmayı Lenis devralır */
 body{
   margin:0;
   background:var(--bg);
@@ -86,6 +91,10 @@ img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
 ::selection{background:var(--acc-glow);color:var(--ink)}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1b212b;border-radius:8px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#28303d}
 
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 section{scroll-margin-top:96px}
@@ -99,7 +108,10 @@ p{margin:0}
 .eyebrow{
   font-family:var(--font-mono);font-size:.72rem;font-weight:600;
   letter-spacing:.18em;text-transform:uppercase;color:var(--acc);
+  min-height:1.2em;
 }
+.eyebrow.typing::after{content:"▌";margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
 .lede{color:var(--mut);font-size:1.06rem;max-width:56ch}
 .grad{
   background:linear-gradient(92deg,var(--acc) 0%,var(--cyan) 100%);
@@ -112,11 +124,14 @@ p{margin:0}
   display:inline-flex;align-items:center;gap:8px;
   font-family:var(--font-display);font-weight:600;font-size:.95rem;
   padding:12px 22px;border-radius:var(--r-btn);border:1px solid transparent;
-  cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease;
+  cursor:pointer;transition:transform .15s ease,box-shadow .2s ease,border-color .15s ease,background .15s ease;
   white-space:nowrap;
 }
-.btn-primary{background:var(--acc);color:var(--btn-ink);box-shadow:0 0 0 0 var(--acc-glow)}
-.btn-primary:hover{background:#2aeea9;transform:translateY(-1px);box-shadow:0 8px 28px -8px var(--acc-glow)}
+.btn-primary{
+  background:linear-gradient(180deg,#22eba4,#12d18e);color:var(--btn-ink);
+  box-shadow:0 10px 30px -14px var(--acc-glow);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 36px -12px var(--acc-glow)}
 .btn-ghost{border-color:var(--line-2);color:var(--ink);background:transparent}
 .btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
 .btn .arr{transition:transform .15s ease}
@@ -125,10 +140,12 @@ p{margin:0}
 /* ── Nav ── */
 header{
   position:sticky;top:0;z-index:50;
-  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
+  transition:background .3s ease,border-color .3s ease;
 }
+header.scrolled{background:color-mix(in srgb,var(--bg) 92%,transparent);border-color:var(--line-2)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.12rem;letter-spacing:-.01em}
 .brand b{font-weight:700;color:var(--acc)}
@@ -136,6 +153,7 @@ header{
 .nav-links{display:flex;gap:28px;font-size:.92rem;color:var(--mut)}
 .nav-links a{transition:color .15s ease}
 .nav-links a:hover{color:var(--ink)}
+.nav-links a.on{color:var(--acc)}
 .nav .btn{padding:9px 18px;font-size:.88rem}
 
 /* ── Hero ── */
@@ -155,6 +173,7 @@ header{
   background:radial-gradient(closest-side,var(--acc-soft),transparent 70%);
   filter:blur(8px);
 }
+#fx{position:absolute;inset:0;z-index:0;pointer-events:none}
 .hero-grid{
   position:relative;z-index:1;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
@@ -167,19 +186,25 @@ header{
 .hero-note span{display:inline-flex;align-items:center;gap:7px}
 .hero-note .tick{color:var(--acc);font-weight:700}
 
-@media (prefers-reduced-motion:no-preference){
-  .hero-copy>*{opacity:0;transform:translateY(14px);animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards}
-  .hero-copy>*:nth-child(2){animation-delay:.08s}
-  .hero-copy>*:nth-child(3){animation-delay:.16s}
-  .hero-copy>*:nth-child(4){animation-delay:.24s}
-  .hero-copy>*:nth-child(5){animation-delay:.32s}
-  .mock{opacity:0;transform:translateY(18px) scale(.985);animation:rise .7s .25s cubic-bezier(.2,.7,.2,1) forwards}
-  @keyframes rise{to{opacity:1;transform:none}}
-  .pulse{animation:pulse 2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-}
+/* JS varken giriş animasyonu için başlangıç durumları (GSAP bunları hedefe taşır).
+   JS yoksa ya da hareket azaltılmışsa bu blok uygulanmaz, her şey görünür kalır. */
+html.js .hero-copy>*:not(.hero-note){opacity:0;transform:translateY(18px)}
+html.js .hero-note span{opacity:0;transform:translateY(10px)}
+html.js .mock{opacity:0;transform:translateY(30px) scale(.97)}
+html.js .section-head>*{opacity:0;transform:translateY(22px)}
+html.js .band-item,
+html.js .feat,
+html.js .mod,
+html.js .formula,
+html.js .formula-note,
+html.js .step,
+html.js .faq details,
+html.js .cta-in>*{opacity:0;transform:translateY(24px)}
+html.js .sev .chip{opacity:0}
+html.js .spark-area{opacity:0}
 
 /* ── Panel maketi ── */
+.mock-tilt{perspective:1100px}
 .mock{
   position:relative;
   background:var(--panel);
@@ -188,6 +213,7 @@ header{
   box-shadow:0 30px 80px -30px #000000cc,0 0 120px -40px var(--acc-glow);
   font-family:var(--font-sans);
   overflow:hidden;
+  transform-style:preserve-3d;
 }
 .mock-bar{
   display:flex;align-items:center;gap:10px;
@@ -204,6 +230,9 @@ header{
 }
 .mock-live{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;color:var(--acc)}
 .mock-live i{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.pulse,.eyebrow.typing::after{animation:none}}
 .mock-body{display:grid;grid-template-columns:150px minmax(0,1fr)}
 .mock-side{border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:3px;background:var(--panel-2)}
 .mock-side .m{
@@ -237,6 +266,33 @@ header{
 .chip.c i{background:var(--crit)} .chip.c{border-color:var(--crit-bg)}
 .chip.h i{background:var(--high)} .chip.h{border-color:var(--high-bg)}
 .chip.o i{background:var(--ok)}   .chip.o{border-color:var(--ok-bg)}
+.toast{
+  position:absolute;right:12px;top:48px;z-index:3;
+  display:flex;align-items:center;gap:8px;pointer-events:none;
+  background:var(--panel-2);border:1px solid var(--line-2);border-radius:9px;
+  padding:7px 12px;font-family:var(--font-mono);font-size:.62rem;color:var(--mut);
+  box-shadow:0 10px 30px -12px #000c;
+  opacity:0; /* yalnızca animasyonla görünür; JS yokken hiç gösterilmez */
+}
+.toast i{font-style:normal;font-weight:700}
+.toast.ok i{color:var(--ok)}
+.toast.info i{color:var(--info)}
+
+/* ── Modül şeridi (marquee) ── */
+.marquee{
+  position:relative;z-index:1;border-top:1px solid var(--line);
+  overflow:hidden;padding:15px 0;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee-track{display:flex;width:max-content}
+.marquee-seg{
+  display:flex;align-items:center;white-space:nowrap;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--faint);
+  padding-right:18px;
+}
+.marquee-seg i{color:var(--acc);font-style:normal;margin:0 18px;font-size:.5rem}
 
 /* ── Metrik bandı ── */
 .band{border-bottom:1px solid var(--line)}
@@ -251,6 +307,15 @@ header{
 /* ── Bölümler ── */
 .section{padding:96px 0}
 .section.alt{background:var(--panel);border-block:1px solid var(--line)}
+
+/* İmleç spot ışığı (kartlarda) */
+.feat,.formula,.mod,.step{position:relative}
+.feat::after,.formula::after,.mod::after,.step::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;pointer-events:none;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),#18e29b12,transparent 65%);
+  transition:opacity .25s ease;
+}
+.feat:hover::after,.formula:hover::after,.mod:hover::after,.step:hover::after{opacity:1}
 
 /* Özellikler */
 .feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -273,9 +338,9 @@ header{
 .mod{
   background:var(--bg);border:1px solid var(--line);border-radius:12px;
   padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0;
-  transition:border-color .2s ease;
+  transition:border-color .2s ease,transform .2s ease;
 }
-.mod:hover{border-color:var(--line-2)}
+.mod:hover{border-color:var(--line-2);transform:translateY(-2px)}
 .mod h3{font-size:.9rem}
 .mod p{color:var(--faint);font-size:.78rem;line-height:1.45}
 .mod .st{
@@ -312,7 +377,7 @@ header{
 /* Nasıl çalışır */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:step}
 .step{
-  position:relative;background:var(--bg);border:1px solid var(--line);
+  background:var(--bg);border:1px solid var(--line);
   border-radius:var(--r-card);padding:28px 24px 24px;display:flex;flex-direction:column;gap:10px;
 }
 .step::before{
@@ -320,6 +385,12 @@ header{
   font-family:var(--font-mono);font-size:.78rem;font-weight:700;color:var(--acc);
   letter-spacing:.12em;
 }
+.step .bar{height:2px;width:100%;background:var(--line);border-radius:2px;overflow:hidden;position:relative}
+.step .bar::after{
+  content:"";position:absolute;inset:0;transform:scaleX(var(--p,1));transform-origin:left;
+  background:linear-gradient(90deg,var(--acc),var(--acc-deep));border-radius:2px;
+}
+html.js .step .bar::after{--p:0}
 .step p{color:var(--mut);font-size:.92rem}
 
 /* SSS */
@@ -373,7 +444,7 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
 /* ── Duyarlılık ── */
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr;gap:48px;padding:64px 0 72px}
-  .mock{max-width:640px}
+  .mock-tilt{max-width:640px}
   .feats,.formulas,.steps{grid-template-columns:1fr 1fr}
   .mods{grid-template-columns:1fr 1fr}
 }
@@ -411,7 +482,7 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
   </defs>
 </svg>
 
-<header>
+<header id="site-head">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="SecurifyISG ana sayfa">
       <svg aria-hidden="true"><use href="#logo-mark"/></svg>
@@ -431,10 +502,11 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
 
   <!-- HERO -->
   <section class="hero">
+    <canvas id="fx" aria-hidden="true"></canvas>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">İSG Operasyon Paneli</p>
-        <h1>Riskten rapora, tüm İSG operasyonu <span class="grad">tek panelde.</span></h1>
+        <p class="eyebrow" id="hero-eyebrow">İSG Operasyon Paneli</p>
+        <h1 id="hero-h1">Riskten rapora, tüm İSG operasyonu <span class="grad">tek panelde.</span></h1>
         <p class="lede">SecurifyISG; risk değerlendirmeden DÖF takibine, eğitimlerden ekipman kontrollerine kadar iş sağlığı ve güvenliği süreçlerinizi çok tesisli tek bir panelde toplar. Kaza sıklık oranınız canlı hesaplanır, resmî çıktınız her an hazırdır.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="mailto:info@securifyisg.com?subject=SecurifyISG%20Demo%20Talebi">Demo Talep Et <span class="arr">→</span></a>
@@ -448,68 +520,79 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
       </div>
 
       <!-- Panel maketi -->
-      <div class="mock" role="img" aria-label="SecurifyISG panel önizlemesi: canlı dönem özeti, KPI kartları ve trend grafiği">
-        <div class="mock-bar">
-          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="mock-url">securifyisg.com</div>
-          <span class="mock-live"><i class="pulse"></i>CANLI</span>
-        </div>
-        <div class="mock-body">
-          <div class="mock-side" aria-hidden="true">
-            <span class="cap">Operasyon</span>
-            <span class="m on">Dashboard</span>
-            <span class="m">Risk Yönetimi</span>
-            <span class="m">Kaza / Ramak Kala</span>
-            <span class="m">DÖF Yönetimi</span>
-            <span class="m">Denetim Yönetimi</span>
-            <span class="m">Eğitim Yönetimi</span>
-            <span class="cap">Saha</span>
-            <span class="m">Acil Durum Planları</span>
-            <span class="m">Ekipman Kontrol</span>
-            <span class="m">Tesis Yönetimi</span>
+      <div class="mock-tilt">
+        <div class="mock" role="img" aria-label="SecurifyISG panel önizlemesi: canlı dönem özeti, KPI kartları ve trend grafiği">
+          <div class="mock-bar">
+            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="mock-url">securifyisg.com</div>
+            <span class="mock-live"><i class="pulse"></i>CANLI</span>
           </div>
-          <div class="mock-main">
-            <div class="mock-title">
-              <b>Canlı dönem özeti</b>
-              <span>2026 · Tüm Yıl · Merkez Kapsamı</span>
+          <div class="mock-body">
+            <div class="mock-side" aria-hidden="true">
+              <span class="cap">Operasyon</span>
+              <span class="m on">Dashboard</span>
+              <span class="m">Risk Yönetimi</span>
+              <span class="m">Kaza / Ramak Kala</span>
+              <span class="m">DÖF Yönetimi</span>
+              <span class="m">Denetim Yönetimi</span>
+              <span class="m">Eğitim Yönetimi</span>
+              <span class="cap">Saha</span>
+              <span class="m">Acil Durum Planları</span>
+              <span class="m">Ekipman Kontrol</span>
+              <span class="m">Tesis Yönetimi</span>
             </div>
-            <div class="kpis">
-              <div class="kpi">
-                <div class="l">Kaza Sıklık Oranı</div>
-                <div class="v">2,4</div>
-                <div class="d up">▾ 0,6 geçen döneme göre</div>
+            <div class="mock-main">
+              <div class="mock-title">
+                <b>Canlı dönem özeti</b>
+                <span>2026 · Tüm Yıl · Merkez Kapsamı</span>
               </div>
-              <div class="kpi">
-                <div class="l">Eğitim Tamamlama</div>
-                <div class="v">%87</div>
-                <div class="d up">▴ 5 puan</div>
+              <div class="kpis">
+                <div class="kpi">
+                  <div class="l">Kaza Sıklık Oranı</div>
+                  <div class="v" data-count="2.4" data-decimals="1">2,4</div>
+                  <div class="d up">▾ 0,6 geçen döneme göre</div>
+                </div>
+                <div class="kpi">
+                  <div class="l">Eğitim Tamamlama</div>
+                  <div class="v" data-count="87" data-prefix="%">%87</div>
+                  <div class="d up">▴ 5 puan</div>
+                </div>
+                <div class="kpi">
+                  <div class="l">Açık DÖF</div>
+                  <div class="v" data-count="12">12</div>
+                  <div class="d warn">3 gecikmiş</div>
+                </div>
               </div>
-              <div class="kpi">
-                <div class="l">Açık DÖF</div>
-                <div class="v">12</div>
-                <div class="d warn">3 gecikmiş</div>
+              <div class="chartcard">
+                <div class="l"><b>Kaza sıklık oranı trendi</b><span>Oca — Ağu</span></div>
+                <svg viewBox="0 0 288 84" preserveAspectRatio="none" style="width:100%;height:84px" aria-hidden="true">
+                  <line x1="4" y1="14" x2="284" y2="14" stroke="#ffffff12" stroke-width="1"/>
+                  <line x1="4" y1="42" x2="284" y2="42" stroke="#ffffff12" stroke-width="1"/>
+                  <line x1="4" y1="70" x2="284" y2="70" stroke="#ffffff12" stroke-width="1"/>
+                  <path class="spark-area" d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66 L276,84 L4,84 Z" fill="url(#g-area)"/>
+                  <path id="spark" d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66" fill="none" stroke="#18e29b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle id="spark-dot" cx="276" cy="66" r="3.5" fill="#18e29b"/>
+                  <circle id="spark-ring" cx="276" cy="66" r="7" fill="none" stroke="#18e29b" stroke-opacity=".35"/>
+                </svg>
               </div>
-            </div>
-            <div class="chartcard">
-              <div class="l"><b>Kaza sıklık oranı trendi</b><span>Oca — Ağu</span></div>
-              <svg viewBox="0 0 288 84" preserveAspectRatio="none" style="width:100%;height:84px" aria-hidden="true">
-                <line x1="4" y1="14" x2="284" y2="14" stroke="#ffffff12" stroke-width="1"/>
-                <line x1="4" y1="42" x2="284" y2="42" stroke="#ffffff12" stroke-width="1"/>
-                <line x1="4" y1="70" x2="284" y2="70" stroke="#ffffff12" stroke-width="1"/>
-                <path d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66 L276,84 L4,84 Z" fill="url(#g-area)"/>
-                <path d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66" fill="none" stroke="#18e29b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="276" cy="66" r="3.5" fill="#18e29b"/>
-                <circle cx="276" cy="66" r="7" fill="none" stroke="#18e29b" stroke-opacity=".35"/>
-              </svg>
-            </div>
-            <div class="sev" aria-label="Açık risk dağılımı">
-              <span class="chip c"><i aria-hidden="true"></i>2 Kritik</span>
-              <span class="chip h"><i aria-hidden="true"></i>7 Yüksek</span>
-              <span class="chip o"><i aria-hidden="true"></i>23 Düşük</span>
-              <span class="chip"><i aria-hidden="true" style="background:var(--info)"></i>4 İzlemede</span>
+              <div class="sev" aria-label="Açık risk dağılımı">
+                <span class="chip c"><i aria-hidden="true"></i>2 Kritik</span>
+                <span class="chip h"><i aria-hidden="true"></i>7 Yüksek</span>
+                <span class="chip o"><i aria-hidden="true"></i>23 Düşük</span>
+                <span class="chip"><i aria-hidden="true" style="background:var(--info)"></i>4 İzlemede</span>
+              </div>
             </div>
           </div>
+          <div class="toast ok" aria-hidden="true"><i>✓</i><span>DÖF #142 kapatıldı</span></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Modül şeridi -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-seg">Risk Yönetimi <i>✦</i> DÖF Yönetimi <i>✦</i> Kaza / Ramak Kala <i>✦</i> Denetim Yönetimi <i>✦</i> Eğitim Yönetimi <i>✦</i> Acil Durum Planları <i>✦</i> Dokümantasyon <i>✦</i> Ekipman Kontrol <i>✦</i> Tesis Yönetimi <i>✦</i> KKD Zimmet <i>✦</i> Kurul Toplantıları <i>✦</i> Yıllık Planlamalar <i>✦</i></div>
+        <div class="marquee-seg">Risk Yönetimi <i>✦</i> DÖF Yönetimi <i>✦</i> Kaza / Ramak Kala <i>✦</i> Denetim Yönetimi <i>✦</i> Eğitim Yönetimi <i>✦</i> Acil Durum Planları <i>✦</i> Dokümantasyon <i>✦</i> Ekipman Kontrol <i>✦</i> Tesis Yönetimi <i>✦</i> KKD Zimmet <i>✦</i> Kurul Toplantıları <i>✦</i> Yıllık Planlamalar <i>✦</i></div>
       </div>
     </div>
   </section>
@@ -517,9 +600,9 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
   <!-- METRİK BANDI -->
   <div class="band" aria-label="Platform özeti">
     <div class="wrap band-in">
-      <div class="band-item"><b>16</b><span>modül tek panelde</span></div>
+      <div class="band-item"><b data-count="16">16</b><span>modül tek panelde</span></div>
       <div class="band-item"><b>Çoklu</b><span>tesis, tek merkez kapsamı</span></div>
-      <div class="band-item"><b>%100</b><span>Türkçe, İSG diliyle</span></div>
+      <div class="band-item"><b data-count="100" data-prefix="%">%100</b><span>Türkçe, İSG diliyle</span></div>
       <div class="band-item"><b>1 tık</b><span>resmî çıktı ve dışa aktarım</span></div>
     </div>
   </div>
@@ -607,17 +690,17 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
       <div class="formulas">
         <div class="formula">
           <span class="fl">Kaza Sıklık Oranı</span>
-          <code>(<b>kaza</b> × 100) / çalışan sayısı</code>
+          <code data-scramble>(<b>kaza</b> × 100) / çalışan sayısı</code>
           <p>Seçili dönemin İSG performans göstergesi; dönem ve tesis filtresiyle anında yeniden hesaplanır.</p>
         </div>
         <div class="formula">
           <span class="fl">Kaza Ağırlık Oranı</span>
-          <code>(<b>kayıp gün</b> × 1.000) / adam-saat</code>
+          <code data-scramble>(<b>kayıp gün</b> × 1.000) / adam-saat</code>
           <p>Kayıp gün ve adam-saat verisinden otomatik türetilir; trend grafiğiyle birlikte izlenir.</p>
         </div>
         <div class="formula">
           <span class="fl">Eğitim Tamamlama</span>
-          <code>tamamlayan / toplam tesis <b>(%)</b></code>
+          <code data-scramble>tamamlayan / toplam tesis <b>(%)</b></code>
           <p>Eğitimini tamamlayan tesislerin toplam tesislere oranı; tesis bazında kırılım hazır.</p>
         </div>
       </div>
@@ -637,14 +720,17 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
       </div>
       <div class="steps">
         <div class="step">
+          <span class="bar" aria-hidden="true"></span>
           <h3>Tesislerinizi ve ekibinizi tanımlayın</h3>
           <p>Merkez kapsamınızı kurun, tesislerinizi ekleyin, rolleri ve modül yetkilerini atayın.</p>
         </div>
         <div class="step">
+          <span class="bar" aria-hidden="true"></span>
           <h3>Kayıtları panele taşıyın</h3>
           <p>Risk değerlendirmeleri, eğitimler, kaza / ramak kala kayıtları ve DÖF'ler ilgili modüllere işlenir.</p>
         </div>
         <div class="step">
+          <span class="bar" aria-hidden="true"></span>
           <h3>Canlı izleyin, tek tıkla raporlayın</h3>
           <p>KPI'lar otomatik hesaplanır, gecikmeler panelde görünür, resmî çıktınız her an hazırdır.</p>
         </div>
@@ -737,5 +823,236 @@ footer{border-top:1px solid var(--line);background:var(--panel)}
   </div>
 </footer>
 
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+var root=document.documentElement;
+if(!root.classList.contains('js'))return; // statik mod ya da hareket azaltma: animasyon yok
+if(!(window.gsap&&window.ScrollTrigger&&window.Lenis)){root.classList.remove('js');return;} // kütüphane yüklenemezse içerik görünür kalsın
+gsap.registerPlugin(ScrollTrigger);
+if(window.SplitText)gsap.registerPlugin(SplitText);
+
+var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ── Lenis pürüzsüz kaydırma + ScrollTrigger entegrasyonu ── */
+var lenis=new Lenis({duration:1.1,smoothWheel:true});
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(function(t){lenis.raf(t*1000)});
+gsap.ticker.lagSmoothing(0);
+
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href');
+    if(id.length<2)return;
+    var el=document.querySelector(id);
+    if(!el)return;
+    e.preventDefault();
+    lenis.scrollTo(el,{offset:-84,duration:1.1});
+    history.pushState(null,'',id);
+  });
+});
+
+/* ── Nav: kaydırınca koyulaş, aktif bölümü işaretle ── */
+var head=document.getElementById('site-head');
+ScrollTrigger.create({start:12,onEnter:function(){head.classList.add('scrolled')},onLeaveBack:function(){head.classList.remove('scrolled')}});
+['ozellikler','moduller','nasil-calisir','sss'].forEach(function(id){
+  var sec=document.getElementById(id),link=document.querySelector('.nav-links a[href="#'+id+'"]');
+  if(!sec||!link)return;
+  ScrollTrigger.create({trigger:sec,start:'top 55%',end:'bottom 45%',
+    onToggle:function(st){link.classList.toggle('on',st.isActive)}});
+});
+
+/* ── Hero arka planı: partiküller + tarama çizgisi (canvas) ── */
+(function(){
+  var cv=document.getElementById('fx');if(!cv)return;
+  var hero=cv.parentElement,ctx=cv.getContext('2d');
+  var W,H,DPR=Math.min(window.devicePixelRatio||1,2),pts=[],scanY=0,run=true,raf=false;
+  function size(){
+    W=hero.clientWidth;H=hero.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    var n=Math.min(60,Math.max(18,Math.round(W/26)));
+    pts=[];for(var i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*1.3,v:.06+Math.random()*.22,p:Math.random()*6.28});
+    scanY=Math.random()*H;
+  }
+  size();addEventListener('resize',size);
+  function tick(){
+    raf=false;
+    if(!run)return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){
+      var p=pts[i];
+      p.y-=p.v;if(p.y<-4){p.y=H+4;p.x=Math.random()*W}
+      p.p+=.02;
+      ctx.globalAlpha=.10+.09*Math.sin(p.p);
+      ctx.fillStyle='#18e29b';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+    }
+    scanY+=H/1100;if(scanY>H+60)scanY=-60;
+    var g=ctx.createLinearGradient(0,scanY-46,0,scanY);
+    g.addColorStop(0,'rgba(24,226,155,0)');g.addColorStop(1,'rgba(24,226,155,0.05)');
+    ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(0,scanY-46,W,46);
+    ctx.fillStyle='rgba(24,226,155,0.10)';ctx.fillRect(0,scanY,W,1);
+    queue();
+  }
+  function queue(){if(!raf&&run){raf=true;requestAnimationFrame(tick)}}
+  ScrollTrigger.create({trigger:hero,start:'top bottom',end:'bottom top',
+    onToggle:function(st){run=st.isActive&&!document.hidden;queue()}});
+  document.addEventListener('visibilitychange',function(){run=!document.hidden;queue()});
+  queue();
+})();
+
+/* ── Sayaçlar ── */
+function counterTween(el){
+  var target=parseFloat(el.getAttribute('data-count')),
+      dec=parseInt(el.getAttribute('data-decimals')||'0',10),
+      pre=el.getAttribute('data-prefix')||'',
+      obj={v:0};
+  return gsap.to(obj,{v:target,duration:1.2,ease:'power2.out',onUpdate:function(){
+    el.textContent=pre+obj.v.toFixed(dec).replace('.',',');
+  }});
+}
+
+/* ── Hero zaman çizelgesi (fontlar hazır olunca) ── */
+document.fonts.ready.then(function(){
+  var eb=document.getElementById('hero-eyebrow'),
+      h1=document.getElementById('hero-h1'),
+      full=eb.textContent;
+  eb.textContent='';
+  var tl=gsap.timeline({defaults:{ease:'power3.out',duration:.8}});
+
+  tl.set(eb,{autoAlpha:1,y:0,onComplete:function(){eb.classList.add('typing')}})
+    .to({p:0},{p:1,duration:.85,ease:'none',onUpdate:function(){
+        var t=this.targets()[0];eb.textContent=full.slice(0,Math.round(t.p*full.length));
+      },onComplete:function(){setTimeout(function(){eb.classList.remove('typing')},1200)}});
+
+  var lines=null;
+  try{if(window.SplitText){lines=new SplitText(h1,{type:'lines',mask:'lines'}).lines}}catch(e){}
+  gsap.set(h1,{autoAlpha:1,y:0});
+  if(lines&&lines.length){tl.from(lines,{yPercent:118,duration:.95,stagger:.09,ease:'power4.out'},'-=0.45')}
+  else{tl.from(h1,{autoAlpha:0,y:18},'-=0.35')}
+
+  tl.to('.hero .lede',{autoAlpha:1,y:0},'-=0.55')
+    .to('.hero-ctas',{autoAlpha:1,y:0},'-=0.55')
+    .to('.hero-note span',{autoAlpha:1,y:0,stagger:.07,duration:.5},'-=0.5')
+    .to('.mock',{autoAlpha:1,y:0,scale:1,duration:1,ease:'power3.out'},'-=0.75')
+    .from('.mock-side .cap,.mock-side .m',{x:-14,autoAlpha:0,stagger:.035,duration:.4,clearProps:'all'},'-=0.55');
+
+  document.querySelectorAll('.kpi .v[data-count]').forEach(function(el,i){
+    tl.add(counterTween(el),1.6+i*.12);
+  });
+
+  var spark=document.getElementById('spark');
+  if(spark){
+    var len=spark.getTotalLength();
+    gsap.set(spark,{strokeDasharray:len,strokeDashoffset:len});
+    gsap.set('#spark-dot,#spark-ring',{scale:0,transformOrigin:'center',svgOrigin:'276 66'});
+    tl.to(spark,{strokeDashoffset:0,duration:1.1,ease:'power2.inOut'},1.7)
+      .to('.spark-area',{opacity:1,duration:.6},'-=0.4')
+      .to('#spark-dot,#spark-ring',{scale:1,duration:.4,ease:'back.out(2)'},'-=0.25');
+  }
+  tl.to('.sev .chip',{autoAlpha:1,y:0,stagger:.07,duration:.4},'-=0.3');
+
+  /* Maket içi bildirim döngüsü */
+  var toast=document.querySelector('.toast');
+  if(toast){
+    var msgs=[['ok','✓','DÖF #142 kapatıldı'],['info','●','Ramak kala bildirimi alındı'],['ok','✓','Eğitim kaydı doğrulandı']],mi=0;
+    var cycle=function(){
+      var m=msgs[mi++%msgs.length];
+      toast.className='toast '+m[0];
+      toast.children[0].textContent=m[1];
+      toast.children[1].textContent=m[2];
+      gsap.timeline({onComplete:function(){gsap.delayedCall(3.4,cycle)}})
+        .fromTo(toast,{y:12,autoAlpha:0},{y:0,autoAlpha:1,duration:.45,ease:'power3.out'})
+        .to(toast,{autoAlpha:0,y:-8,duration:.4,delay:2.2,ease:'power2.in'});
+    };
+    gsap.delayedCall(3,cycle);
+  }
+
+  ScrollTrigger.refresh();
+});
+
+/* ── Maket eğimi (yalnızca hassas imleçte) ── */
+if(fine){
+  var mock=document.querySelector('.mock');
+  gsap.set(mock,{transformPerspective:1000});
+  var qx=gsap.quickTo(mock,'rotationX',{duration:.55,ease:'power2.out'}),
+      qy=gsap.quickTo(mock,'rotationY',{duration:.55,ease:'power2.out'});
+  mock.addEventListener('pointermove',function(e){
+    var r=mock.getBoundingClientRect(),
+        px=(e.clientX-r.left)/r.width-.5,
+        py=(e.clientY-r.top)/r.height-.5;
+    qy(px*5);qx(-py*4);
+  });
+  mock.addEventListener('pointerleave',function(){qx(0);qy(0)});
+}
+
+/* ── Modül şeridi ── */
+gsap.to('.marquee-track',{xPercent:-50,duration:32,ease:'none',repeat:-1});
+
+/* ── Kaydırma reveal'ları ── */
+function revealGroup(trigger,items,vars){
+  var els=gsap.utils.toArray(items);
+  if(!els.length)return;
+  gsap.to(els,Object.assign({autoAlpha:1,y:0,duration:.7,ease:'power3.out',
+    stagger:.08,scrollTrigger:{trigger:trigger,start:'top 82%'}},vars||{}));
+}
+gsap.utils.toArray('.section-head').forEach(function(sh){revealGroup(sh,sh.children,{stagger:.1})});
+revealGroup('.band-in','.band-item',{stagger:.1});
+revealGroup('.feats','.feat');
+revealGroup('.mods','.mod',{stagger:.05});
+revealGroup('.formulas','.formula');
+revealGroup('.formula-note','.formula-note');
+revealGroup('.steps','.step',{stagger:.12});
+revealGroup('.faq','.faq details',{stagger:.06});
+revealGroup('.cta-in','.cta-in>*',{stagger:.09});
+
+/* Adım çubukları */
+gsap.utils.toArray('.step .bar').forEach(function(bar,i){
+  gsap.to(bar,{'--p':1,duration:.9,delay:.25+i*.15,ease:'power2.inOut',
+    scrollTrigger:{trigger:'.steps',start:'top 78%'}});
+});
+
+/* Metrik bandı sayaçları */
+document.querySelectorAll('.band-item b[data-count]').forEach(function(el){
+  ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){counterTween(el)}});
+});
+
+/* Formül karıştırma (scramble) efekti */
+function scramble(el,delay){
+  var orig=el.innerHTML,txt=el.textContent,chars='▮01/×()%·-';
+  var frame=0,total=Math.max(16,Math.round(txt.length*.85));
+  setTimeout(function(){
+    var iv=setInterval(function(){
+      frame++;
+      var cut=Math.floor(txt.length*frame/total),out='';
+      for(var i=0;i<txt.length;i++){
+        var c=txt[i];
+        out+=i<cut?c:(c===' '?' ':chars[(Math.random()*chars.length)|0]);
+      }
+      el.textContent=out;
+      if(frame>=total){clearInterval(iv);el.innerHTML=orig}
+    },26);
+  },delay);
+}
+gsap.utils.toArray('code[data-scramble]').forEach(function(el,i){
+  ScrollTrigger.create({trigger:el,start:'top 85%',once:true,onEnter:function(){scramble(el,i*160)}});
+});
+
+/* Kart spot ışığı koordinatları */
+if(fine){
+  document.addEventListener('pointermove',function(e){
+    var t=e.target.closest('.feat,.formula,.mod,.step');
+    if(!t)return;
+    var r=t.getBoundingClientRect();
+    t.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    t.style.setProperty('--my',(e.clientY-r.top)+'px');
+  },{passive:true});
+}
+})();
+</script>
 </body>
 </html>
