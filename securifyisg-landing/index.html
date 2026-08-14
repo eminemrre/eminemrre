@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecurifyISG — İSG Operasyon Paneli</title>
+<meta name="description" content="Risk değerlendirmeden DÖF takibine, eğitimlerden KKD zimmetine: tüm iş sağlığı ve güvenliği operasyonunuz çok tesisli tek panelde. Canlı KPI'lar, resmî çıktılar, rol bazlı erişim.">
+<link rel="canonical" href="https://securifyisg.com/">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32" type="image/x-icon">
+<meta name="theme-color" content="#08090c">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SecurifyISG">
+<meta property="og:title" content="SecurifyISG — İSG Operasyon Paneli">
+<meta property="og:description" content="Riskten rapora, tüm İSG operasyonu tek panelde. Canlı KPI'lar, 16 modül, çok tesisli mimari.">
+<meta property="og:url" content="https://securifyisg.com/">
+<meta property="og:image" content="https://securifyisg.com/og.png">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "SecurifyISG",
+  "alternateName": "İSG Operasyon Paneli",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "tr",
+  "url": "https://securifyisg.com/",
+  "description": "İş sağlığı ve güvenliği operasyon yönetim paneli: risk değerlendirme, DÖF, kaza / ramak kala, denetim, eğitim ve daha fazlası tek panelde."
+}
+</script>
+
+<style>
+/* ── SecurifyISG marka fontları (panelin kendi subset'leri, self-hosted) ── */
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/space-grotesk-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/space-grotesk-latin.woff2) format("woff2");unicode-range:U+00??,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-latin.woff2) format("woff2");unicode-range:U+00??,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url(fonts/jetbrains-mono-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url(fonts/jetbrains-mono-latin.woff2) format("woff2");unicode-range:U+00??,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* ── Panelin token seti (securifyisg.com koyu tema) ── */
+:root{
+  --bg:#08090c;
+  --panel:#0d1017;
+  --panel-2:#10141c;
+  --ink:#eceef2;
+  --mut:#9ba3ae;
+  --faint:#5c636e;
+  --line:#ffffff12;
+  --line-2:#ffffff1f;
+  --acc:#18e29b;
+  --acc-deep:#10b884;
+  --acc-soft:#18e29b1f;
+  --acc-glow:#18e29b4d;
+  --cyan:#25bff2;
+  --crit:#ff5c61;   --crit-bg:#ff5c6126;
+  --high:#f89b4b;   --high-bg:#f89b4b24;
+  --info:#5ea8ff;   --info-bg:#5ea8ff21;
+  --ok:#3ddc97;     --ok-bg:#3ddc9721;
+  --btn-ink:#04120c;
+  --font-sans:Inter,"Inter Fallback",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-display:"Space Grotesk",Inter,system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r-card:16px;
+  --r-btn:10px;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+::selection{background:var(--acc-glow);color:var(--ink)}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+section{scroll-margin-top:96px}
+
+/* ── Tipografi ── */
+h1,h2,h3{font-family:var(--font-display);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:600}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600}
+h3{font-size:1.02rem;font-weight:600;line-height:1.35}
+p{margin:0}
+.eyebrow{
+  font-family:var(--font-mono);font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--acc);
+}
+.lede{color:var(--mut);font-size:1.06rem;max-width:56ch}
+.grad{
+  background:linear-gradient(92deg,var(--acc) 0%,var(--cyan) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.section-head{display:flex;flex-direction:column;gap:14px;margin-bottom:44px;max-width:680px}
+
+/* ── Butonlar ── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-display);font-weight:600;font-size:.95rem;
+  padding:12px 22px;border-radius:var(--r-btn);border:1px solid transparent;
+  cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--acc);color:var(--btn-ink);box-shadow:0 0 0 0 var(--acc-glow)}
+.btn-primary:hover{background:#2aeea9;transform:translateY(-1px);box-shadow:0 8px 28px -8px var(--acc-glow)}
+.btn-ghost{border-color:var(--line-2);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+.btn .arr{transition:transform .15s ease}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* ── Nav ── */
+header{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.12rem;letter-spacing:-.01em}
+.brand b{font-weight:700;color:var(--acc)}
+.brand svg{width:26px;height:26px}
+.nav-links{display:flex;gap:28px;font-size:.92rem;color:var(--mut)}
+.nav-links a{transition:color .15s ease}
+.nav-links a:hover{color:var(--ink)}
+.nav .btn{padding:9px 18px;font-size:.88rem}
+
+/* ── Hero ── */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{ /* kontrol odası ızgarası */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 80% at 70% 20%,#000 0%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 70% 20%,#000 0%,transparent 70%);
+  opacity:.5;
+}
+.hero::after{ /* zümrüt ışıma */
+  content:"";position:absolute;top:-220px;right:-160px;width:720px;height:640px;pointer-events:none;
+  background:radial-gradient(closest-side,var(--acc-soft),transparent 70%);
+  filter:blur(8px);
+}
+.hero-grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:56px;align-items:center;padding:84px 0 92px;
+}
+.hero-copy{display:flex;flex-direction:column;gap:22px}
+.hero-copy .lede{font-size:1.09rem}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.hero-note{display:flex;gap:18px;flex-wrap:wrap;color:var(--faint);font-family:var(--font-mono);font-size:.74rem;letter-spacing:.02em}
+.hero-note span{display:inline-flex;align-items:center;gap:7px}
+.hero-note .tick{color:var(--acc);font-weight:700}
+
+@media (prefers-reduced-motion:no-preference){
+  .hero-copy>*{opacity:0;transform:translateY(14px);animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero-copy>*:nth-child(2){animation-delay:.08s}
+  .hero-copy>*:nth-child(3){animation-delay:.16s}
+  .hero-copy>*:nth-child(4){animation-delay:.24s}
+  .hero-copy>*:nth-child(5){animation-delay:.32s}
+  .mock{opacity:0;transform:translateY(18px) scale(.985);animation:rise .7s .25s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .pulse{animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+}
+
+/* ── Panel maketi ── */
+.mock{
+  position:relative;
+  background:var(--panel);
+  border:1px solid var(--line-2);
+  border-radius:18px;
+  box-shadow:0 30px 80px -30px #000000cc,0 0 120px -40px var(--acc-glow);
+  font-family:var(--font-sans);
+  overflow:hidden;
+}
+.mock-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);
+}
+.dots{display:flex;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--faint);opacity:.45}
+.dots i:first-child{background:var(--crit);opacity:.7}
+.dots i:nth-child(2){background:var(--high);opacity:.7}
+.dots i:nth-child(3){background:var(--ok);opacity:.7}
+.mock-url{
+  flex:1;text-align:center;font-family:var(--font-mono);font-size:.68rem;color:var(--faint);
+  background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:3px 10px;max-width:240px;margin:0 auto;
+}
+.mock-live{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;color:var(--acc)}
+.mock-live i{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.mock-body{display:grid;grid-template-columns:150px minmax(0,1fr)}
+.mock-side{border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:3px;background:var(--panel-2)}
+.mock-side .m{
+  font-size:.7rem;color:var(--mut);padding:6px 9px;border-radius:7px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mock-side .m.on{background:var(--acc-soft);color:var(--acc);font-weight:600}
+.mock-side .cap{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.14em;color:var(--faint);padding:4px 9px 2px;text-transform:uppercase}
+.mock-main{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mock-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.mock-title b{font-family:var(--font-display);font-size:.86rem;font-weight:600}
+.mock-title span{font-family:var(--font-mono);font-size:.6rem;color:var(--faint)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kpi{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+.kpi .l{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);line-height:1.4;min-height:2.8em}
+.kpi .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:1.22rem;font-weight:700;margin-top:4px;letter-spacing:-.02em}
+.kpi .d{font-family:var(--font-mono);font-size:.6rem;margin-top:2px;color:var(--mut)}
+.kpi .d.up{color:var(--ok)}
+.kpi .d.warn{color:var(--high)}
+.chartcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+.chartcard .l{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.chartcard .l b{font-size:.7rem;font-weight:600;color:var(--mut)}
+.chartcard .l span{font-family:var(--font-mono);font-size:.58rem;color:var(--faint)}
+.sev{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:.6rem;font-variant-numeric:tabular-nums;
+  padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mut);background:var(--bg);
+}
+.chip i{width:6px;height:6px;border-radius:50%}
+.chip.c i{background:var(--crit)} .chip.c{border-color:var(--crit-bg)}
+.chip.h i{background:var(--high)} .chip.h{border-color:var(--high-bg)}
+.chip.o i{background:var(--ok)}   .chip.o{border-color:var(--ok-bg)}
+
+/* ── Metrik bandı ── */
+.band{border-bottom:1px solid var(--line)}
+.band-in{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  padding:26px 0;gap:18px;
+}
+.band-item{display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.band-item b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;color:var(--ink)}
+.band-item span{font-size:.78rem;color:var(--faint)}
+
+/* ── Bölümler ── */
+.section{padding:96px 0}
+.section.alt{background:var(--panel);border-block:1px solid var(--line)}
+
+/* Özellikler */
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.feat{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:26px 24px;display:flex;flex-direction:column;gap:12px;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.feat:hover{border-color:var(--acc-glow);transform:translateY(-2px)}
+.feat .ic{
+  width:38px;height:38px;border-radius:10px;background:var(--acc-soft);
+  display:grid;place-items:center;color:var(--acc);
+}
+.feat .ic svg{width:19px;height:19px}
+.feat p{color:var(--mut);font-size:.92rem}
+.section.alt .feat{background:var(--bg)}
+
+/* Modül kayıt defteri */
+.mods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mod{
+  background:var(--bg);border:1px solid var(--line);border-radius:12px;
+  padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0;
+  transition:border-color .2s ease;
+}
+.mod:hover{border-color:var(--line-2)}
+.mod h3{font-size:.9rem}
+.mod p{color:var(--faint);font-size:.78rem;line-height:1.45}
+.mod .st{
+  margin-top:auto;padding-top:8px;align-self:flex-start;
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.mod .st i{width:6px;height:6px;border-radius:50%}
+.st.live{color:var(--acc)} .st.live i{background:var(--acc);box-shadow:0 0 7px var(--acc)}
+.st.dev{color:var(--high)} .st.dev i{background:var(--high)}
+
+/* KPI formülleri */
+.formulas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.formula{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:24px;display:flex;flex-direction:column;gap:14px;
+}
+.formula .fl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.formula code{
+  font-family:var(--font-mono);font-size:.95rem;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;display:block;overflow-x:auto;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.formula code b{color:var(--acc);font-weight:600}
+.formula p{color:var(--faint);font-size:.83rem}
+.formula-note{
+  margin-top:18px;display:flex;gap:12px;align-items:flex-start;
+  border:1px dashed var(--line-2);border-radius:12px;padding:16px 18px;
+  color:var(--mut);font-size:.88rem;
+}
+.formula-note .tick{color:var(--acc);font-weight:700;font-family:var(--font-mono)}
+
+/* Nasıl çalışır */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:step}
+.step{
+  position:relative;background:var(--bg);border:1px solid var(--line);
+  border-radius:var(--r-card);padding:28px 24px 24px;display:flex;flex-direction:column;gap:10px;
+}
+.step::before{
+  counter-increment:step;content:"0" counter(step);
+  font-family:var(--font-mono);font-size:.78rem;font-weight:700;color:var(--acc);
+  letter-spacing:.12em;
+}
+.step p{color:var(--mut);font-size:.92rem}
+
+/* SSS */
+.faq{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq details{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;transition:border-color .2s ease;
+}
+.faq details[open]{border-color:var(--acc-glow)}
+.faq summary{
+  cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:18px 22px;font-family:var(--font-display);font-weight:600;font-size:.98rem;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";font-family:var(--font-mono);color:var(--acc);font-size:1.1rem;font-weight:600;
+  transition:transform .2s ease;flex-shrink:0;
+}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 22px 20px;color:var(--mut);font-size:.93rem;max-width:64ch}
+
+/* Kapanış CTA */
+.cta{position:relative;overflow:hidden;text-align:center;padding:110px 0;border-top:1px solid var(--line)}
+.cta::before{
+  content:"";position:absolute;left:50%;bottom:-260px;transform:translateX(-50%);
+  width:820px;height:480px;pointer-events:none;
+  background:radial-gradient(closest-side,var(--acc-soft),transparent 72%);
+}
+.cta-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
+.cta .lede{max-width:46ch;margin:0 auto}
+.cta .mail{font-family:var(--font-mono);font-size:.8rem;color:var(--faint)}
+.cta .mail a{color:var(--mut);border-bottom:1px solid var(--line-2);padding-bottom:1px;transition:color .15s ease,border-color .15s ease}
+.cta .mail a:hover{color:var(--acc);border-color:var(--acc)}
+
+/* Footer */
+footer{border-top:1px solid var(--line);background:var(--panel)}
+.foot{display:flex;justify-content:space-between;gap:32px;padding:44px 0 36px;flex-wrap:wrap}
+.foot-brand{display:flex;flex-direction:column;gap:10px;max-width:320px}
+.foot-brand .brand{font-size:1.05rem}
+.foot-brand p{color:var(--faint);font-size:.84rem}
+.foot-links{display:flex;gap:56px;flex-wrap:wrap}
+.foot-links nav{display:flex;flex-direction:column;gap:9px;font-size:.86rem;color:var(--mut)}
+.foot-links nav b{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:4px}
+.foot-links nav a:hover{color:var(--acc)}
+.foot-base{
+  border-top:1px solid var(--line);padding:18px 0 22px;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--faint);
+}
+
+/* ── Duyarlılık ── */
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:48px;padding:64px 0 72px}
+  .mock{max-width:640px}
+  .feats,.formulas,.steps{grid-template-columns:1fr 1fr}
+  .mods{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .nav-links{display:none}
+}
+@media (max-width:620px){
+  .feats,.formulas,.steps,.mods{grid-template-columns:1fr}
+  .band-in{grid-template-columns:1fr 1fr;gap:22px}
+  .section{padding:72px 0}
+  .mock-side{display:none}
+  .mock-body{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Ortak SVG tanımları -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#25bff2"/>
+      <stop offset="1" stop-color="#18e29b"/>
+    </linearGradient>
+    <linearGradient id="g-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18e29b" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#18e29b" stop-opacity="0"/>
+    </linearGradient>
+    <symbol id="logo-mark" viewBox="0 0 32 32">
+      <path d="M16 2.5 27 7v9.2c0 6.6-4.6 11.5-11 13.3C9.6 27.7 5 22.8 5 16.2V7l11-4.5Z"
+            fill="none" stroke="url(#g-mark)" stroke-width="2.2" stroke-linejoin="round"/>
+      <polyline points="9.5,16.8 13,16.8 14.8,12.6 17.2,20.4 19,16.8 22.5,16.8"
+            fill="none" stroke="url(#g-mark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="SecurifyISG ana sayfa">
+      <svg aria-hidden="true"><use href="#logo-mark"/></svg>
+      <span>Securify<b>ISG</b></span>
+    </a>
+    <nav class="nav-links" aria-label="Sayfa içi gezinme">
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#moduller">Modüller</a>
+      <a href="#nasil-calisir">Nasıl Çalışır</a>
+      <a href="#sss">SSS</a>
+    </nav>
+    <a class="btn btn-primary" href="https://securifyisg.com">Panele Giriş</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">İSG Operasyon Paneli</p>
+        <h1>Riskten rapora, tüm İSG operasyonu <span class="grad">tek panelde.</span></h1>
+        <p class="lede">SecurifyISG; risk değerlendirmeden DÖF takibine, eğitimlerden ekipman kontrollerine kadar iş sağlığı ve güvenliği süreçlerinizi çok tesisli tek bir panelde toplar. Kaza sıklık oranınız canlı hesaplanır, resmî çıktınız her an hazırdır.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="mailto:info@securifyisg.com?subject=SecurifyISG%20Demo%20Talebi">Demo Talep Et <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="https://securifyisg.com">Panele Giriş</a>
+        </div>
+        <div class="hero-note">
+          <span><b class="tick">✓</b> Kurulum gerektirmez</span>
+          <span><b class="tick">✓</b> Tarayıcıdan çalışır</span>
+          <span><b class="tick">✓</b> Rol bazlı yetki</span>
+        </div>
+      </div>
+
+      <!-- Panel maketi -->
+      <div class="mock" role="img" aria-label="SecurifyISG panel önizlemesi: canlı dönem özeti, KPI kartları ve trend grafiği">
+        <div class="mock-bar">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="mock-url">securifyisg.com</div>
+          <span class="mock-live"><i class="pulse"></i>CANLI</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-side" aria-hidden="true">
+            <span class="cap">Operasyon</span>
+            <span class="m on">Dashboard</span>
+            <span class="m">Risk Yönetimi</span>
+            <span class="m">Kaza / Ramak Kala</span>
+            <span class="m">DÖF Yönetimi</span>
+            <span class="m">Denetim Yönetimi</span>
+            <span class="m">Eğitim Yönetimi</span>
+            <span class="cap">Saha</span>
+            <span class="m">Acil Durum Planları</span>
+            <span class="m">Ekipman Kontrol</span>
+            <span class="m">Tesis Yönetimi</span>
+          </div>
+          <div class="mock-main">
+            <div class="mock-title">
+              <b>Canlı dönem özeti</b>
+              <span>2026 · Tüm Yıl · Merkez Kapsamı</span>
+            </div>
+            <div class="kpis">
+              <div class="kpi">
+                <div class="l">Kaza Sıklık Oranı</div>
+                <div class="v">2,4</div>
+                <div class="d up">▾ 0,6 geçen döneme göre</div>
+              </div>
+              <div class="kpi">
+                <div class="l">Eğitim Tamamlama</div>
+                <div class="v">%87</div>
+                <div class="d up">▴ 5 puan</div>
+              </div>
+              <div class="kpi">
+                <div class="l">Açık DÖF</div>
+                <div class="v">12</div>
+                <div class="d warn">3 gecikmiş</div>
+              </div>
+            </div>
+            <div class="chartcard">
+              <div class="l"><b>Kaza sıklık oranı trendi</b><span>Oca — Ağu</span></div>
+              <svg viewBox="0 0 288 84" preserveAspectRatio="none" style="width:100%;height:84px" aria-hidden="true">
+                <line x1="4" y1="14" x2="284" y2="14" stroke="#ffffff12" stroke-width="1"/>
+                <line x1="4" y1="42" x2="284" y2="42" stroke="#ffffff12" stroke-width="1"/>
+                <line x1="4" y1="70" x2="284" y2="70" stroke="#ffffff12" stroke-width="1"/>
+                <path d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66 L276,84 L4,84 Z" fill="url(#g-area)"/>
+                <path d="M4,18 L44,31 L84,25 L124,42 L164,49 L204,45 L244,59 L276,66" fill="none" stroke="#18e29b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="276" cy="66" r="3.5" fill="#18e29b"/>
+                <circle cx="276" cy="66" r="7" fill="none" stroke="#18e29b" stroke-opacity=".35"/>
+              </svg>
+            </div>
+            <div class="sev" aria-label="Açık risk dağılımı">
+              <span class="chip c"><i aria-hidden="true"></i>2 Kritik</span>
+              <span class="chip h"><i aria-hidden="true"></i>7 Yüksek</span>
+              <span class="chip o"><i aria-hidden="true"></i>23 Düşük</span>
+              <span class="chip"><i aria-hidden="true" style="background:var(--info)"></i>4 İzlemede</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRİK BANDI -->
+  <div class="band" aria-label="Platform özeti">
+    <div class="wrap band-in">
+      <div class="band-item"><b>16</b><span>modül tek panelde</span></div>
+      <div class="band-item"><b>Çoklu</b><span>tesis, tek merkez kapsamı</span></div>
+      <div class="band-item"><b>%100</b><span>Türkçe, İSG diliyle</span></div>
+      <div class="band-item"><b>1 tık</b><span>resmî çıktı ve dışa aktarım</span></div>
+    </div>
+  </div>
+
+  <!-- ÖZELLİKLER -->
+  <section class="section" id="ozellikler">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Neden SecurifyISG</p>
+        <h2>Excel'e dağılmış operasyon değil, canlı bir kontrol odası.</h2>
+        <p class="lede">Kayıtlar modüllerde, göstergeler dashboard'da, çıktılar tek tıkta. İSG profesyonelinin gün sonunda dosya birleştirmesine gerek kalmaz.</p>
+      </div>
+      <div class="feats">
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m6 15 4-6 4 3 5-8"/></svg></div>
+          <h3>Canlı KPI dashboard'u</h3>
+          <p>Kaza sıklık ve ağırlık oranları, dönem bazlı trendler ve dağılımlar otomatik hesaplanır. Seçili dönemin İSG performansı tek bakışta.</p>
+        </article>
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4v18"/><path d="M19 21V11l-7-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg></div>
+          <h3>Çok tesisli mimari</h3>
+          <p>Merkez kapsamı tek ekranda: tesis bazında KPI, eğitim tamamlama oranı ve karşılaştırmalı görünüm. Her tesis kendi verisini işler.</p>
+        </article>
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Rol bazlı yetkilendirme</h3>
+          <p>İş güvenliği uzmanından koordinatöre, herkes yetkisi kadar görür. Modül bazlı erişim kuralları kullanıcı yönetiminden tanımlanır.</p>
+        </article>
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M7 17v4h10v-4"/></svg></div>
+          <h3>Resmî çıktı ve dışa aktarım</h3>
+          <p>Denetim ve kurul dosyaları için yazdırılabilir resmî çıktılar tek tıkla üretilir. Kayıtlar dışa aktarılır, arşiv düzeni bozulmaz.</p>
+        </article>
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+          <h3>Bildirim ve termin takibi</h3>
+          <p>Gecikmiş aksiyonlar, yaklaşan eğitimler ve DÖF terminleri panelde sizi bulur. Hiçbir kapanış tarihi sessizce geçmez.</p>
+        </article>
+        <article class="feat">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <h3>Kaza / ramak kala akışı</h3>
+          <p>Olay kayıtları, ramak kala ve tehlike bildirimleri tek akışta toplanır; oranlara ve trendlere anında yansır.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODÜLLER -->
+  <section class="section alt" id="moduller">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Modül Haritası</p>
+        <h2>16 modül, tek operasyon dili.</h2>
+        <p class="lede">Paneldeki her modül aynı kayıt düzenini ve aynı yetki modelini konuşur. Yenileri eklendikçe menüde yerini alır.</p>
+      </div>
+      <div class="mods">
+        <article class="mod"><h3>Dashboard</h3><p>Canlı dönem özeti, KPI kartları, trend ve dağılımlar.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Risk Yönetimi</h3><p>Risk değerlendirmeleri, revizyon ve aksiyon takibi.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>DÖF Yönetimi</h3><p>Düzeltici ve önleyici faaliyetler, termin ve kapanış takibi.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Kaza / Ramak Kala</h3><p>Olay kayıtları, ramak kala ve tehlike bildirimleri.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Denetim Yönetimi</h3><p>Saha denetimleri, bulgular ve aksiyon takibi.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Eğitim Yönetimi</h3><p>İSG eğitimleri, katılım ve tesis bazlı tamamlama oranları.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Acil Durum Planları</h3><p>Acil durum planları, tatbikat ve ekip kayıtları.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Dokümantasyon</h3><p>İSG dokümanları tek arşivde; düzenli, erişilebilir, güncel.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Ekipman Kontrol</h3><p>Periyodik ekipman kontrolleri ve uygunluk takibi.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Tesis Yönetimi</h3><p>Merkez kapsamı, tesis kartları ve karşılaştırmalı görünüm.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Kullanıcı Yönetimi</h3><p>Kullanıcılar, roller ve modül bazlı yetkiler.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Ayarlar</h3><p>Şirket logosu, tema ve panel tercihleri.</p><span class="st live"><i aria-hidden="true"></i>Canlı</span></article>
+        <article class="mod"><h3>Çalışan Yönetimi</h3><p>Çalışan kayıtları, görev bilgileri ve personel takibi.</p><span class="st dev"><i aria-hidden="true"></i>Geliştiriliyor</span></article>
+        <article class="mod"><h3>KKD Zimmet</h3><p>KKD teslim, zimmet, yenileme ve iade süreçleri.</p><span class="st dev"><i aria-hidden="true"></i>Geliştiriliyor</span></article>
+        <article class="mod"><h3>Kurul Toplantıları</h3><p>Kurul gündemi, kararlar, aksiyonlar ve toplantı tutanakları.</p><span class="st dev"><i aria-hidden="true"></i>Geliştiriliyor</span></article>
+        <article class="mod"><h3>Yıllık Planlamalar</h3><p>Yıllık İSG faaliyet planları ve takvim bazlı takip.</p><span class="st dev"><i aria-hidden="true"></i>Geliştiriliyor</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- KPI FORMÜLLERİ -->
+  <section class="section" id="gostergeler">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Sahadan Veriye</p>
+        <h2>Göstergeler, İSG profesyonelinin diliyle.</h2>
+        <p class="lede">Oranlar sizin bildiğiniz tanımlarla, panel tarafından otomatik hesaplanır — elle tablo güncellemek yok.</p>
+      </div>
+      <div class="formulas">
+        <div class="formula">
+          <span class="fl">Kaza Sıklık Oranı</span>
+          <code>(<b>kaza</b> × 100) / çalışan sayısı</code>
+          <p>Seçili dönemin İSG performans göstergesi; dönem ve tesis filtresiyle anında yeniden hesaplanır.</p>
+        </div>
+        <div class="formula">
+          <span class="fl">Kaza Ağırlık Oranı</span>
+          <code>(<b>kayıp gün</b> × 1.000) / adam-saat</code>
+          <p>Kayıp gün ve adam-saat verisinden otomatik türetilir; trend grafiğiyle birlikte izlenir.</p>
+        </div>
+        <div class="formula">
+          <span class="fl">Eğitim Tamamlama</span>
+          <code>tamamlayan / toplam tesis <b>(%)</b></code>
+          <p>Eğitimini tamamlayan tesislerin toplam tesislere oranı; tesis bazında kırılım hazır.</p>
+        </div>
+      </div>
+      <div class="formula-note">
+        <span class="tick">✓</span>
+        <span>Yalnızca gerekli payda verisi bulunan KPI hesaplanır — eksik veri hiçbir zaman oranlarınızı bozmaz, boş dönemler açıkça işaretlenir.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NASIL ÇALIŞIR -->
+  <section class="section alt" id="nasil-calisir">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Nasıl Çalışır</p>
+        <h2>Üç adımda denetime hazır panel.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Tesislerinizi ve ekibinizi tanımlayın</h3>
+          <p>Merkez kapsamınızı kurun, tesislerinizi ekleyin, rolleri ve modül yetkilerini atayın.</p>
+        </div>
+        <div class="step">
+          <h3>Kayıtları panele taşıyın</h3>
+          <p>Risk değerlendirmeleri, eğitimler, kaza / ramak kala kayıtları ve DÖF'ler ilgili modüllere işlenir.</p>
+        </div>
+        <div class="step">
+          <h3>Canlı izleyin, tek tıkla raporlayın</h3>
+          <p>KPI'lar otomatik hesaplanır, gecikmeler panelde görünür, resmî çıktınız her an hazırdır.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section class="section" id="sss">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">SSS</p>
+        <h2>Sık sorulan sorular</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>SecurifyISG kimler için?</summary>
+          <p class="a">İş güvenliği uzmanları, İSG koordinatörleri, OSGB'ler ve birden fazla tesisi tek merkezden yöneten işletmelerin İSG ekipleri için tasarlandı.</p>
+        </details>
+        <details>
+          <summary>Kurulum gerekiyor mu?</summary>
+          <p class="a">Hayır. SecurifyISG tarayıcıdan çalışan bir web uygulamasıdır; bilgisayarınıza veya sunucunuza kurulum gerektirmez. Karanlık ve aydınlık tema desteğiyle sahada da ofiste de rahat kullanılır.</p>
+        </details>
+        <details>
+          <summary>Birden fazla tesisi tek hesapta yönetebilir miyim?</summary>
+          <p class="a">Evet. Merkez kapsamı görünümüyle tüm tesislerinizi tek panelden izler, tesis bazında KPI ve eğitim tamamlama oranlarını karşılaştırırsınız.</p>
+        </details>
+        <details>
+          <summary>Verilerimi dışa aktarabilir miyim?</summary>
+          <p class="a">Evet. Kayıtlar dışa aktarılabilir; denetim ve kurul dosyaları için yazdırılabilir resmî çıktılar tek tıkla üretilir.</p>
+        </details>
+        <details>
+          <summary>Yetkilendirme nasıl çalışıyor?</summary>
+          <p class="a">Erişim rol bazlıdır. Kullanıcı yönetimi modülünden her kullanıcıya modül bazında yetki tanımlanır; herkes yalnızca yetkili olduğu alanı görür.</p>
+        </details>
+        <details>
+          <summary>Demoyu nasıl talep ederim?</summary>
+          <p class="a">Aşağıdaki "Demo Talep Et" bağlantısıyla bize e-posta gönderin; ekibinize özel bir tanıtım için dönüş yapalım.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- KAPANIŞ CTA -->
+  <section class="cta">
+    <div class="wrap cta-in">
+      <p class="eyebrow">Başlayın</p>
+      <h2>İSG operasyonunuzu panele taşımaya<br>hazır mısınız?</h2>
+      <p class="lede">Dağınık tablolar yerine canlı göstergeler, kovalanan terminler yerine panelde takip.</p>
+      <div class="hero-ctas" style="justify-content:center">
+        <a class="btn btn-primary" href="mailto:info@securifyisg.com?subject=SecurifyISG%20Demo%20Talebi">Demo Talep Et <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="https://securifyisg.com">Panele Giriş</a>
+      </div>
+      <p class="mail">Sorularınız için: <a href="mailto:info@securifyisg.com">info@securifyisg.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a class="brand" href="#top" aria-label="SecurifyISG ana sayfa">
+          <svg aria-hidden="true" width="26" height="26"><use href="#logo-mark"/></svg>
+          <span>Securify<b>ISG</b></span>
+        </a>
+        <p>İş Sağlığı ve Güvenliği operasyon yönetim paneli. Türkiye'de, İSG profesyonelleri için geliştiriliyor.</p>
+      </div>
+      <div class="foot-links">
+        <nav aria-label="Ürün">
+          <b>Ürün</b>
+          <a href="#ozellikler">Özellikler</a>
+          <a href="#moduller">Modüller</a>
+          <a href="#gostergeler">Göstergeler</a>
+          <a href="#nasil-calisir">Nasıl Çalışır</a>
+        </nav>
+        <nav aria-label="Erişim">
+          <b>Erişim</b>
+          <a href="https://securifyisg.com">Panele Giriş</a>
+          <a href="mailto:info@securifyisg.com?subject=SecurifyISG%20Demo%20Talebi">Demo Talebi</a>
+          <a href="#sss">SSS</a>
+        </nav>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 SecurifyISG · securifyisg.com</span>
+      <span>İSG Operasyon Paneli</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
